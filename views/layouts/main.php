@@ -7,7 +7,7 @@
 
 use yii\helpers\Html;
 
-$bundle = yiister\gentelella\assets\Asset::register($this);
+$bundle = \app\extentions\components\AssetBundler::register($this);
 
 ?>
 <?php $this->beginPage(); ?>

@@ -5,22 +5,15 @@
 $this->title = 'My Yii Application';
 ?>
 <div class="container">
-    <h1>Countries</h1>
-    <ul>
-      <?php foreach ($countries as $country): ?>
-        <li>
-            <?= \yii\helpers\Html::encode("{$country->name} ({$country->code})") ?>:
-            <?= $country->population ?>
-        </li>
-      <?php endforeach; ?>
-    </ul>
 
-    <?= \yii\widgets\LinkPager::widget(['pagination' => $pagination]) ?>
 
     <label>
-        <div class="icheckbox disabled">
-            <input type="checkbox" name="quux[1]" disabled>
-        </div>
+        <input type="checkbox" name="quux[1]">
         Foo
     </label>
+
+    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+        <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="First Name">
+        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+    </div>
 </div>
