@@ -61,14 +61,14 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
                     <div class="menu_section">
                         <h3>General</h3>
                         <?php
-                        $mods = [Yii::$app->getModule('users')];
+                        $mods = [Yii::$app->getModule('users'),Yii::$app->getModule('posts')];
                         $items = [];
 
                         foreach ($mods as $mod) {
                             $items[] = [
-                                'label' => $mod->getUniqueId(),
+                                'label' => ucfirst($mod->getUniqueId()),
                                 'url' => "/{$mod->getUniqueId()}",
-                                'icon' => 'users'
+                                'icon' => $mod->getIcon()
                             ];
                         }
                         echo \yiister\gentelella\widgets\Menu::widget(

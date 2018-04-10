@@ -16,8 +16,8 @@ class ModuleBootstraper implements BootstrapInterface
             'class' => UserManagement::class
         ]);
 
-        /*Yii::$app->setModule('posts', [
+        Yii::$app->setModule('posts', [
             'class' => PostsManegement::class
-        ]);*/
+        ]);
     }
 }
