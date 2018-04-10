@@ -3,6 +3,7 @@
 
 namespace app\extentions\components;
 
+use app\extentions\components\module\ModulesManager;
 use app\modules\posts\PostsManegement;
 use Yii;
 use yii\base\BootstrapInterface;
@@ -12,12 +13,17 @@ class ModuleBootstraper implements BootstrapInterface
 {
     public function bootstrap($app)
     {
-        Yii::$app->setModule('users', [
-            'class' => UserManagement::class
-        ]);
+        $moduleManager = Yii::createObject(ModulesManager::class);
+        Yii::$container->set('modulesManager', $moduleManager);
 
-        Yii::$app->setModule('posts', [
-            'class' => PostsManegement::class
-        ]);
+        $installedModules = $moduleManager->getInstalledModules();
+
+        foreach ($installedModules as $module) {
+            Yii::$app->setModule($module->name, [
+                'class' => $module->getEntryClass()
+            ]);
+
+            $moduleManager->addRegisteredModule(Yii::$app->getModule($module->name));
+        }
     }
 }

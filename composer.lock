@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "801453a9735181a62a5d926f8e1b5ba6",
+    "content-hash": "a849e3a7f52b5be3d29a71d3863359aa",
     "packages": [
         {
             "name": "aleksandar-ivanov/aivanov-module-posts",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aleksandar-ivanov/yii-posts.git",
-                "reference": "04de13366e2ac5de9644703ebf0adbaea6498a64"
+                "reference": "67f0f84930a58de15c2422f3f41274601476baca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-posts/zipball/04de13366e2ac5de9644703ebf0adbaea6498a64",
-                "reference": "04de13366e2ac5de9644703ebf0adbaea6498a64",
+                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-posts/zipball/67f0f84930a58de15c2422f3f41274601476baca",
+                "reference": "67f0f84930a58de15c2422f3f41274601476baca",
                 "shasum": ""
             },
             "require": {
@@ -35,7 +35,7 @@
                 "source": "https://github.com/aleksandar-ivanov/yii-posts/tree/master",
                 "issues": "https://github.com/aleksandar-ivanov/yii-posts/issues"
             },
-            "time": "2018-04-10T13:38:27+00:00"
+            "time": "2018-04-10T17:04:12+00:00"
         },
         {
             "name": "aleksandar-ivanov/aivanov-module-users",
@@ -43,12 +43,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aleksandar-ivanov/yii-users.git",
-                "reference": "c6038f1aa3c488a2fc1c48d0e4104280e8429997"
+                "reference": "8207b11c54cc04e0f5783c034775d5a8d4b2e2a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-users/zipball/c6038f1aa3c488a2fc1c48d0e4104280e8429997",
-                "reference": "c6038f1aa3c488a2fc1c48d0e4104280e8429997",
+                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-users/zipball/8207b11c54cc04e0f5783c034775d5a8d4b2e2a9",
+                "reference": "8207b11c54cc04e0f5783c034775d5a8d4b2e2a9",
                 "shasum": ""
             },
             "require": {
@@ -66,7 +66,7 @@
                 "source": "https://github.com/aleksandar-ivanov/yii-users/tree/master",
                 "issues": "https://github.com/aleksandar-ivanov/yii-users/issues"
             },
-            "time": "2018-04-10T13:46:46+00:00"
+            "time": "2018-04-10T15:42:01+00:00"
         },
         {
             "name": "aleksandar-ivanov/yii-module-installer",
@@ -3636,8 +3636,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "aleksandar-ivanov/yii-module-installer": 20,
-        "aleksandar-ivanov/aivanov-module-users": 20,
-        "aleksandar-ivanov/aivanov-module-posts": 20
+        "aleksandar-ivanov/aivanov-module-posts": 20,
+        "aleksandar-ivanov/aivanov-module-users": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

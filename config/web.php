@@ -54,6 +54,9 @@ $config = [
             ],
         ],
 
+        'modulesManager' => [
+            'class' => \app\extentions\components\module\ModulesManager::class
+        ]
     ],
     'params' => $params
 ];

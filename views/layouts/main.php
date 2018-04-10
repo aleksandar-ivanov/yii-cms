@@ -61,10 +61,10 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
                     <div class="menu_section">
                         <h3>General</h3>
                         <?php
-                        $mods = [Yii::$app->getModule('users'),Yii::$app->getModule('posts')];
+
                         $items = [];
 
-                        foreach ($mods as $mod) {
+                        foreach (Yii::$container->get('modulesManager')->getRegisteredModules() as $mod) {
                             $items[] = [
                                 'label' => ucfirst($mod->getUniqueId()),
                                 'url' => "/{$mod->getUniqueId()}",
@@ -76,6 +76,7 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
                                 "items" => $items,
                             ]
                         )
+
                         ?>
                     </div>
 
@@ -84,7 +85,7 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
 
                 <!-- /menu footer buttons -->
                 <div class="sidebar-footer hidden-small">
-                    <a data-toggle="tooltip" data-placement="top" title="Settings">
+                    <a data-toggle="tooltip" data-placement="top" title="Settings" href="/settings">
                         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                     </a>
                     <a data-toggle="tooltip" data-placement="top" title="FullScreen">

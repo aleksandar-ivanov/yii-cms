@@ -57,36 +57,9 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
-        /*$userModule = Yii::$app->getModule('users');
-        var_dump(is_null($userModule));
-
-        $postsModule = Yii::$app->getModule('posts');
-        var_dump(is_null($postsModule));
-
-        exit;*/
-        $query = Country::find(3);
-
-        $pagination = new Pagination([
-            'defaultPageSize' => 5,
-            'totalCount' => $query->count()
-        ]);
-
-        $countries = $query->orderBy('name')
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
-
-        return $this->render('index', [
-            'countries' => $countries,
-            'pagination' => $pagination
-        ]);
+        return $this->render('index');
     }
 
     /**
@@ -119,50 +92,5 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
-
-    public function actionEntry()
-    {
-        $model = new EntryForm();
-
-        if($model->load(Yii::$app->request->post()) && $model->validate()) {
-            // valid data in $model
-            return $this->render('entry-confirm', ['model' => $model]);
-        } else {
-            return $this->render('entry',['model' => $model]);
-        }
-    }
-
-    public function actionUsers()
-    {
-        return $this->render('users', ['users' => ['Sasho', 'Pesho']]);
     }
 }
