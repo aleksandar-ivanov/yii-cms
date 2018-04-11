@@ -64,7 +64,7 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
 
                         $items = [];
 
-                        foreach (Yii::$container->get('modulesManager')->getRegisteredModules() as $mod) {
+                        foreach (Yii::$container->get('modulesManager')->getEnabledModules() as $mod) {
                             $items[] = [
                                 'label' => ucfirst($mod->getUniqueId()),
                                 'url' => "/{$mod->getUniqueId()}",

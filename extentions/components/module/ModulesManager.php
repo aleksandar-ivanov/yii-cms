@@ -6,16 +6,32 @@ use yii\base\Module;
 
 class ModulesManager
 {
+    protected $allModules = [];
+
     protected $installedModules = [];
 
     protected $registeredModules = [];
 
+    /**
+     * ModulesManager constructor.
+     */
+    public function __construct()
+    {
+        $this->allModules = \app\models\Module::findBySql('select * from modules')->all();
+    }
+
+
+    public function getAllModules()
+    {
+        return $this->allModules;
+    }
+
     public function getInstalledModules()
     {
         if (!$this->installedModules) {
-            $installedModules = \app\models\Module::findAll([
-                'installed' => true
-            ]);
+            $installedModules = array_filter($this->allModules, function ($module) {
+                return $module->installed;
+            });
 
             $this->installedModules = array_filter($installedModules, function ($module) {
                 $moduleEntryName = ucfirst($module->name);
@@ -43,6 +59,19 @@ class ModulesManager
         }
 
         return $this->installedModules;
+    }
+
+    public function getEnabledModules()
+    {
+        $installedMap = [];
+
+        foreach ($this->installedModules as $installedModule) {
+            $installedMap[$installedModule->name] = $installedModule;
+        }
+
+        return array_filter($this->registeredModules, function ($module) use ($installedMap) {
+            return $installedMap[$module->getUniqueId()]->enabled;
+        });
     }
 
     public function addRegisteredModule(Module $module)
