@@ -10,7 +10,19 @@ $(document).ready(function() {
 
     $installSelectedBtn.on('click', function (ev) {
         var keys = $('#w0').yiiGridView('getSelectedRows');
-        console.log(keys);
+
+        if (!keys.length) {
+            return;
+        }
+
+        $.ajax({
+            url : '/module/installmany',
+            data : {
+                ids : keys
+            }
+        }).then(function (res) {
+            window.location.reload();
+        });
     });
 
     $('.check-module').on('ifToggled', function (ev) {

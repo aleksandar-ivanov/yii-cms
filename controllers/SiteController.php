@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\extentions\components\module\ModuleInstaller;
 use app\models\Country;
 use app\models\EntryForm;
 use app\modules\users\UserManagement;
+use app\modules\users\UsersManagement;
 use Yii;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
@@ -59,7 +61,9 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $mI = new ModuleInstaller();
+        $mI->install(Yii::$app->getModule('users'));
+        //return $this->render('index');
     }
 
     /**

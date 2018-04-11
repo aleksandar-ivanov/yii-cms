@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Module;
+use yii\web\Response;
 
 class ModuleController extends \yii\web\Controller
 {
@@ -19,6 +20,20 @@ class ModuleController extends \yii\web\Controller
         $module->update();
 
         return $this->redirect('/settings');
+    }
+
+    public function actionInstallmany()
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $ids = \Yii::$app->request->get('ids');
+
+        Module::updateAll([
+            'installed' => true,
+            'enabled' => true
+        ], ['id' => $ids, 'installed' => false]);
+
+        return 'Installed modules';
     }
 
     public function actionEnable($id)
