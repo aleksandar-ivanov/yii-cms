@@ -29,36 +29,29 @@ class ModuleInstaller
     public function install(Module $module)
     {
 
-        /*// List of items with dependencies.  Order is not important
-        $tables = [
-            'reports' => ['posts', 'products'],
-            'posts' => [],
-            'products' => []
-        ];
-
-        $resolved = [];
-        $unresolved = [];
-        // Resolve dependencies for each table
-        foreach (array_keys($tables) as $table) {
-            try {
-                list ($resolved, $unresolved) = $this->dep_resolve($table, $tables, $resolved, $unresolved);
-            } catch (\Exception $e) {
-                die("Oops! " . $e->getMessage());
-            }
-        }
-
-        // Print out result
-        foreach ($resolved as $table) {
-            $deps = empty($tables[$table]) ? 'none' : join(',', $tables[$table]);
-            print "$table (deps: $deps)\n " . "<br>";
-        }*/
         $modulesTree = [];
 
         $moduleComposerJson = $this->getModuleComposerJson($module);
 
         $this->getComposerDependencies($module->getUniqueId(), $moduleComposerJson, $modulesTree);
 
-        var_dump($modulesTree);
+        $resolved = [];
+        $unresolved = [];
+        // Resolve dependencies for each table
+        foreach (array_keys($modulesTree) as $module) {
+            try {
+                list ($resolved, $unresolved) = $this->dep_resolve($module, $modulesTree, $resolved, $unresolved);
+            } catch (\Exception $e) {
+                die("Oops! " . $e->getMessage());
+            }
+        }
+
+        foreach ($resolved as $module) {
+            if ($this->isModuleInstalled($module)) {
+                continue;
+            }
+            $this->installProcedure($module);
+        }
     }
 
     public function getModulePath(Module $module)
@@ -120,28 +113,34 @@ class ModuleInstaller
 
     protected function getComposerDependencies($modName, $composerJson, &$dependencies = [])
     {
-        foreach ($composerJson['require'] as $name => $version) {
+        $actualDependencies = array_filter($composerJson['require'], function ($name) {
             $nameParts = explode('/', $name);
 
             if (!isset($nameParts[1])) {
-                continue;
+                return false;
             }
 
             if ($nameParts[0] !== static::MODULE_ORG_PREFIX) {
-                continue;
+                return false;
             }
 
             $afterSlashParts = explode('-', $nameParts[1]);
 
             if (!count($afterSlashParts) > 2 || ($afterSlashParts[0] . '-' . $afterSlashParts[1]) !== static::MODULE_PREFIX) {
-                continue;
+                return false;
             }
 
+            return true;
+        }, ARRAY_FILTER_USE_KEY);
+
+        if (count($actualDependencies) === 0) {
+            $dependencies[$modName] = [];
+        }
+
+        foreach ($actualDependencies as $name => $version) {
+            $nameParts = explode('/', $name);
+            $afterSlashParts = explode('-', $nameParts[1]);
             $moduleName = $afterSlashParts[2];
-            if ($this->isModuleInstalled($moduleName)) {
-                $dependencies[$modName] = [];
-                continue;
-            }
 
             $dependencies[$modName][] = $moduleName;
 
@@ -149,8 +148,9 @@ class ModuleInstaller
         }
     }
 
-    private function getModuleNameFromComposerJson($fullName)
+    protected function installProcedure($moduleName)
     {
 
     }
+
 }
