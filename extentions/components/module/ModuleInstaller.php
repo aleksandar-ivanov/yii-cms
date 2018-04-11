@@ -8,8 +8,27 @@ use yii\base\Module;
 
 class ModuleInstaller
 {
+    const INSTALLER_MODULE = 'aleksandar-ivanov/yii-module-installer';
+
+    const MODULE_ORG_PREFIX = 'aleksandar-ivanov';
+
+    const MODULE_PREFIX = 'aivanov-module';
+
+    protected $installedModules = [];
+
+    /**
+     * ModuleInstaller constructor.
+     * @param array $installedModules
+     */
+    public function __construct()
+    {
+        $this->installedModules = \Yii::$container->get('modulesManager')->getInstalledModules();
+    }
+
+
     public function install(Module $module)
     {
+
         /*// List of items with dependencies.  Order is not important
         $tables = [
             'reports' => ['posts', 'products'],
@@ -33,10 +52,13 @@ class ModuleInstaller
             $deps = empty($tables[$table]) ? 'none' : join(',', $tables[$table]);
             print "$table (deps: $deps)\n " . "<br>";
         }*/
-        $moduleComposerJson = $this->getModuleComposerJson($module);
-        foreach ($moduleComposerJson['require'] as $requiredModule) {
+        $modulesTree = [];
 
-        }
+        $moduleComposerJson = $this->getModuleComposerJson($module);
+
+        $this->getComposerDependencies($module->getUniqueId(), $moduleComposerJson, $modulesTree);
+
+        var_dump($modulesTree);
     }
 
     public function getModulePath(Module $module)
@@ -87,5 +109,48 @@ class ModuleInstaller
         }
 
         return [$resolved, $unresolved];
+    }
+
+    protected function isModuleInstalled($name)
+    {
+        return count(array_filter($this->installedModules, function ($module) use ($name){
+            return $module->name === $name;
+        })) > 0;
+    }
+
+    protected function getComposerDependencies($modName, $composerJson, &$dependencies = [])
+    {
+        foreach ($composerJson['require'] as $name => $version) {
+            $nameParts = explode('/', $name);
+
+            if (!isset($nameParts[1])) {
+                continue;
+            }
+
+            if ($nameParts[0] !== static::MODULE_ORG_PREFIX) {
+                continue;
+            }
+
+            $afterSlashParts = explode('-', $nameParts[1]);
+
+            if (!count($afterSlashParts) > 2 || ($afterSlashParts[0] . '-' . $afterSlashParts[1]) !== static::MODULE_PREFIX) {
+                continue;
+            }
+
+            $moduleName = $afterSlashParts[2];
+            if ($this->isModuleInstalled($moduleName)) {
+                $dependencies[$modName] = [];
+                continue;
+            }
+
+            $dependencies[$modName][] = $moduleName;
+
+            $this->getComposerDependencies($moduleName, $this->getModuleComposerJson(new Module($moduleName)), $dependencies);
+        }
+    }
+
+    private function getModuleNameFromComposerJson($fullName)
+    {
+
     }
 }

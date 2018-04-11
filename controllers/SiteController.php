@@ -8,6 +8,7 @@ use app\models\EntryForm;
 use app\modules\users\UserManagement;
 use app\modules\users\UsersManagement;
 use Yii;
+use yii\base\Module;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -62,7 +63,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $mI = new ModuleInstaller();
-        $mI->install(Yii::$app->getModule('users'));
+        $mI->install(new Module('posts'));
         //return $this->render('index');
     }
 
