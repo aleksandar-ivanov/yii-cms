@@ -4,6 +4,7 @@
 namespace app\extentions\components\module;
 
 
+use Symfony\Component\Process\Process;
 use yii\base\Module;
 
 class ModuleInstaller
@@ -49,6 +50,7 @@ class ModuleInstaller
             }
         }
 
+
         foreach ($resolved as $module) {
             if ($this->isModuleInstalled($module)) {
                 continue;
@@ -57,15 +59,15 @@ class ModuleInstaller
         }
     }
 
-    public function getModulePath(Module $module)
+    public function getModulePath($moduleName)
     {
         return \Yii::$app->basePath . DIRECTORY_SEPARATOR . 'modules' .
-            DIRECTORY_SEPARATOR . $module->getUniqueId() . DIRECTORY_SEPARATOR;
+            DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR;
     }
 
     public function getModuleComposerJson(Module $module)
     {
-        $composerPath = $this->getModulePath($module) . 'composer.json';
+        $composerPath = $this->getModulePath($module->getUniqueId()) . 'composer.json';
 
         if (!file_exists($composerPath)) {
             throw new \InvalidArgumentException("The given module does not have a composer.json file. Path : {$composerPath}");
@@ -153,7 +155,15 @@ class ModuleInstaller
 
     protected function installProcedure($moduleName)
     {
+        $modulePath = $this->getModulePath($moduleName);
 
+        $migrationsPath = $modulePath . DIRECTORY_SEPARATOR . 'migrations';
+
+        $migrationCommand = sprintf("php yii migrate --migrationPath=%s --interactive=0", $migrationsPath);
+        $process = new Process($migrationCommand, \Yii::$app->basePath);
+        $process->run();
+
+        
     }
 
 }

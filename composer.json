@@ -19,6 +19,7 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "yiister/yii2-gentelella": "~1.0",
+        "symfony/process" : "^3.4",
         "aleksandar-ivanov/yii-module-installer": "dev-master",
         "aleksandar-ivanov/aivanov-module-posts": "dev-master",
         "aleksandar-ivanov/aivanov-module-users": "dev-master",

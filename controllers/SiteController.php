@@ -67,11 +67,11 @@ class SiteController extends Controller
             return $this->redirect('/login');
         }
 
-        echo 'Hello';
-        /*var_dump(Yii::$app->getModule('users')->basePath);
-        exit;
+
+        var_dump(Yii::$app->getModule('users')->basePath);
+
         $mI = new ModuleInstaller();
-        $mI->install(new Module('posts'));*/
+        $mI->install(new Module('reports'));
         //return $this->render('index');
     }
 
