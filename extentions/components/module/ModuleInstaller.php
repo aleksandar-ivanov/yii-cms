@@ -25,7 +25,10 @@ class ModuleInstaller
         $this->installedModules = \Yii::$container->get('modulesManager')->getInstalledModules();
     }
 
-
+    /**
+     * @param Module $module
+     * @throws \Exception
+     */
     public function install(Module $module)
     {
 
@@ -42,7 +45,7 @@ class ModuleInstaller
             try {
                 list ($resolved, $unresolved) = $this->dep_resolve($module, $modulesTree, $resolved, $unresolved);
             } catch (\Exception $e) {
-                die("Oops! " . $e->getMessage());
+                throw new \Exception($e->getMessage());
             }
         }
 

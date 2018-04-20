@@ -129,7 +129,14 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
                                 <li>
                                     <a href="javascript:;">Help</a>
                                 </li>
-                                <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                <li>
+                                    <form action="/site/logout" method="POST">
+                                        <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
+                                        <button>
+                                            <i class="fa fa-sign-out pull-right"></i> Log Out
+                                        </button>
+                                    </form>
+
                                 </li>
                             </ul>
                         </li>

@@ -2,8 +2,13 @@
     vertical-align: middle;
 }
 
-
 th.action-column, td.action-column, th.check-column, td.check-column {
     text-align: center;
+}
+
+.login-form-wrapper {
+    transform: translate(-50%, -50%);
+    margin-top: 15%;
+    margin-left: 50%;
 }
 

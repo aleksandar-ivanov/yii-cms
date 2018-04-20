@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\extentions\components\module\ModuleInstaller;
 use app\models\Country;
 use app\models\EntryForm;
+use app\modules\users\models\User;
 use app\modules\users\UserManagement;
 use app\modules\users\UsersManagement;
 use Yii;
@@ -62,8 +63,15 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect('/login');
+        }
+
+        echo 'Hello';
+        /*var_dump(Yii::$app->getModule('users')->basePath);
+        exit;
         $mI = new ModuleInstaller();
-        $mI->install(new Module('posts'));
+        $mI->install(new Module('posts'));*/
         //return $this->render('index');
     }
 
@@ -74,17 +82,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
     }
 
     /**

@@ -23,7 +23,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => \app\modules\users\models\User::class,
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -54,11 +54,18 @@ $config = [
             ],
         ],
 
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            // uncomment if you want to cache RBAC items hierarchy
+            // 'cache' => 'cache',
+        ],
+
         'modulesManager' => [
             'class' => \app\extentions\components\module\ModulesManager::class
         ]
     ],
-    'params' => $params
+    'params' => $params,
+
 ];
 
 if (YII_ENV_DEV) {
