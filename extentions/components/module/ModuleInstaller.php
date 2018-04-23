@@ -163,7 +163,15 @@ class ModuleInstaller
         $process = new Process($migrationCommand, \Yii::$app->basePath);
         $process->run();
 
-        
+        $composerJson = $this->getModuleComposerJson(new Module($moduleName));
+        $extraEntries = $composerJson['extra'] ?? [];
+
+        if (isset($extraEntries['install']) && class_exists($extraEntries['install'])) {
+            $installScript = new $extraEntries['install'];
+            if (is_callable($installScript)) {
+                call_user_func($installScript);
+            }
+        }
     }
 
 }
