@@ -32,30 +32,21 @@ class ModuleInstaller
      */
     public function install(Module $module)
     {
-
-        $modulesTree = [];
-
-        $moduleComposerJson = $this->getModuleComposerJson($module);
-
-        $this->getComposerDependencies($module->getUniqueId(), $moduleComposerJson, $modulesTree);
-
-        $resolved = [];
-        $unresolved = [];
-        // Resolve dependencies for each table
-        foreach (array_keys($modulesTree) as $module) {
-            try {
-                list ($resolved, $unresolved) = $this->dep_resolve($module, $modulesTree, $resolved, $unresolved);
-            } catch (\Exception $e) {
-                throw new \Exception($e->getMessage());
-            }
-        }
-
-
-        foreach ($resolved as $module) {
+        foreach ($this->getModuleDependencies($module) as $module) {
             if ($this->isModuleInstalled($module)) {
                 continue;
             }
             $this->installProcedure($module);
+        }
+    }
+
+    public function uninstall(Module $module)
+    {
+        foreach (array_reverse($this->getModuleDependencies($module)) as $module) {
+            if (!$this->isModuleInstalled($module)) {
+                continue;
+            }
+            $this->uninstallProcedure($module);
         }
     }
 
@@ -74,6 +65,28 @@ class ModuleInstaller
         }
 
         return json_decode(file_get_contents($composerPath), true);
+    }
+
+    public function getModuleDependencies(Module $module)
+    {
+        $modulesTree = [];
+
+        $moduleComposerJson = $this->getModuleComposerJson($module);
+
+        $this->getComposerDependencies($module->getUniqueId(), $moduleComposerJson, $modulesTree);
+
+        $resolved = [];
+        $unresolved = [];
+        // Resolve dependencies for each table
+        foreach (array_keys($modulesTree) as $module) {
+            try {
+                list ($resolved, $unresolved) = $this->dep_resolve($module, $modulesTree, $resolved, $unresolved);
+            } catch (\Exception $e) {
+                throw new \Exception($e->getMessage());
+            }
+        }
+
+        return $resolved;
     }
 
     /**
@@ -168,6 +181,24 @@ class ModuleInstaller
 
         if (isset($extraEntries['install']) && class_exists($extraEntries['install'])) {
             $installScript = new $extraEntries['install'];
+            if (is_callable($installScript)) {
+                call_user_func($installScript);
+            }
+        }
+    }
+
+    private function uninstallProcedure($module)
+    {
+        $module = Module::findOne(['name' => $module]);
+        $module->installed = false;
+        $module->enabled = false;
+        $module->update();
+
+        $composerJson = $this->getModuleComposerJson(new Module($module));
+        $extraEntries = $composerJson['extra'] ?? [];
+
+        if (isset($extraEntries['uninstall']) && class_exists($extraEntries['uninstall'])) {
+            $installScript = new $extraEntries['uninstall'];
             if (is_callable($installScript)) {
                 call_user_func($installScript);
             }

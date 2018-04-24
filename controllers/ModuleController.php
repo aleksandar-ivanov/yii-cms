@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\extentions\components\module\ModuleInstaller;
 use app\models\Module;
 use yii\web\Response;
 
@@ -48,9 +49,14 @@ class ModuleController extends \yii\web\Controller
     public function actionUninstall($id)
     {
         $module = Module::findOne(['id' => $id]);
-        $module->installed = false;
-        $module->enabled = false;
-        $module->update();
+        $yiiModule = \Yii::$app->getModule($module->name);
+        $moduleInstaller = new ModuleInstaller();
+
+        if ($dependencies = $moduleInstaller->getModuleDependencies($yiiModule)) {
+            return $this->redirect('/settings');
+        }
+
+        $moduleInstaller->uninstall();
 
         return $this->redirect('/settings');
     }
