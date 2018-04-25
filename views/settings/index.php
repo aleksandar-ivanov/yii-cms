@@ -48,7 +48,7 @@
                                     return "<a href='/module/enable/?id=$model->id' class='btn btn-success'>Enable</a>";
                                 },
                                 'uninstall' => function ($url, $model, $key) {
-                                    return "<a href='/module/uninstall?id=$model->id' class='btn btn-danger'>Uninstall</a>";
+                                    return "<a data-module-id='$model->id' href='/module/uninstall?id=$model->id' class='btn btn-danger uninstall'>Uninstall</a>";
                                 },
                                 'disable' => function ($url, $model, $key) {
                                     return "<a href='/module/disable/?id=$model->id' class='btn btn-warning'>Disable</a>";

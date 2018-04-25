@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\extentions\components\module\ModuleInstaller;
 use app\models\Module;
+use yii\web\Request;
 use yii\web\Response;
 
 class ModuleController extends \yii\web\Controller
@@ -16,9 +17,9 @@ class ModuleController extends \yii\web\Controller
     public function actionInstall($id)
     {
         $module = Module::findOne(['id' => $id]);
-        $module->installed = true;
-        $module->enabled = true;
-        $module->update();
+
+        $moduleInstaller = new ModuleInstaller();
+        $moduleInstaller->install(new \yii\base\Module($module->name));
 
         return $this->redirect('/settings');
     }
@@ -46,17 +47,32 @@ class ModuleController extends \yii\web\Controller
         return $this->redirect('/settings');
     }
 
+    public function actionCheckmoduledependencies()
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $module = Module::findOne(['id' => \Yii::$app->request->get('id')]);
+
+        if (!$module) {
+            \Yii::$app->response->statusCode = 404;
+            return ['message' => 'This module is not found'];
+        }
+
+        $yiiModule = \Yii::$app->getModule($module->name);
+        $moduleInstaller = new ModuleInstaller();
+
+        $dependencies = $moduleInstaller->getModuleDependencies($yiiModule);
+
+        return ['dependencies' => $dependencies];
+    }
+
     public function actionUninstall($id)
     {
         $module = Module::findOne(['id' => $id]);
         $yiiModule = \Yii::$app->getModule($module->name);
         $moduleInstaller = new ModuleInstaller();
 
-        if ($dependencies = $moduleInstaller->getModuleDependencies($yiiModule)) {
-            return $this->redirect('/settings');
-        }
-
-        $moduleInstaller->uninstall();
+        $moduleInstaller->uninstall($yiiModule);
 
         return $this->redirect('/settings');
     }

@@ -67,12 +67,7 @@ class SiteController extends Controller
             return $this->redirect('/login');
         }
 
-
-        var_dump(Yii::$app->getModule('users')->basePath);
-
-        $mI = new ModuleInstaller();
-        $mI->install(new Module('reports'));
-        //return $this->render('index');
+        return $this->render('index');
     }
 
     /**

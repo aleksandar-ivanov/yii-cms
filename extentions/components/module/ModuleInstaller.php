@@ -17,6 +17,8 @@ class ModuleInstaller
 
     protected $installedModules = [];
 
+    protected $immutable = ['users'];
+
     /**
      * ModuleInstaller constructor.
      * @param array $installedModules
@@ -32,22 +34,26 @@ class ModuleInstaller
      */
     public function install(Module $module)
     {
-        foreach ($this->getModuleDependencies($module) as $module) {
-            if ($this->isModuleInstalled($module)) {
+        foreach ($this->getModuleDependencies($module) as $moduleDep) {
+            if ($this->isModuleInstalled($moduleDep) || in_array($moduleDep, $this->immutable)) {
                 continue;
             }
-            $this->installProcedure($module);
+            $this->installProcedure($moduleDep);
         }
+
+        $this->installProcedure($module->getUniqueId());
     }
 
     public function uninstall(Module $module)
     {
-        foreach (array_reverse($this->getModuleDependencies($module)) as $module) {
-            if (!$this->isModuleInstalled($module)) {
+        foreach (array_reverse($this->getModuleDependencies($module)) as $moduleDep) {
+            if (!$this->isModuleInstalled($moduleDep) || in_array($moduleDep, $this->immutable)) {
                 continue;
             }
-            $this->uninstallProcedure($module);
+            $this->uninstallProcedure($moduleDep);
         }
+
+        $this->uninstallProcedure($module->getUniqueId());
     }
 
     public function getModulePath($moduleName)
@@ -78,15 +84,17 @@ class ModuleInstaller
         $resolved = [];
         $unresolved = [];
         // Resolve dependencies for each table
-        foreach (array_keys($modulesTree) as $module) {
+        foreach (array_keys($modulesTree) as $leaf) {
             try {
-                list ($resolved, $unresolved) = $this->dep_resolve($module, $modulesTree, $resolved, $unresolved);
+                list ($resolved, $unresolved) = $this->dep_resolve($leaf, $modulesTree, $resolved, $unresolved);
             } catch (\Exception $e) {
                 throw new \Exception($e->getMessage());
             }
         }
 
-        return $resolved;
+        return array_filter($resolved, function ($moduleName) use ($module) {
+            return $moduleName !== $module->getUniqueId();
+        });
     }
 
     /**
@@ -172,6 +180,15 @@ class ModuleInstaller
 
         $migrationsPath = $modulePath . DIRECTORY_SEPARATOR . 'migrations';
 
+        if (!$module = \app\models\Module::findOne(['name' => $moduleName])) {
+            $module = new \app\models\Module();
+            $module->name = $moduleName;
+        }
+
+        $module->installed = true;
+        $module->enabled = true;
+        $module->save();
+
         $migrationCommand = sprintf("php yii migrate --migrationPath=%s --interactive=0", $migrationsPath);
         $process = new Process($migrationCommand, \Yii::$app->basePath);
         $process->run();
@@ -189,10 +206,10 @@ class ModuleInstaller
 
     private function uninstallProcedure($module)
     {
-        $module = Module::findOne(['name' => $module]);
-        $module->installed = false;
-        $module->enabled = false;
-        $module->update();
+        $moduleModel = \app\models\Module::findOne(['name' => $module]);
+        $moduleModel->installed = false;
+        $moduleModel->enabled = false;
+        $moduleModel->update();
 
         $composerJson = $this->getModuleComposerJson(new Module($module));
         $extraEntries = $composerJson['extra'] ?? [];
@@ -203,6 +220,14 @@ class ModuleInstaller
                 call_user_func($installScript);
             }
         }
+
+        $modulePath = $this->getModulePath($module);
+        $migrationsPath = $modulePath . 'migrations' . DIRECTORY_SEPARATOR;
+        $migrationsCount = count(glob($migrationsPath . "*.php"));
+
+        $migrationCommand = sprintf("php yii migrate/down %d --migrationPath=%s --interactive=0", $migrationsCount, $migrationsPath);
+        $process = new Process($migrationCommand, \Yii::$app->basePath);
+        $process->run();
     }
 
 }

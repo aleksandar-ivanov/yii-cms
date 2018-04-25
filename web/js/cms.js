@@ -46,6 +46,37 @@ $(document).ready(function() {
         $installSelectedBtn.prop('disabled', installSelectedBtnState );
     });
 
+    $('.uninstall').on('click', function (ev) {
+        ev.preventDefault();
 
+        var moduleId = $(ev.target).data('module-id');
+
+        $.ajax({
+            url : '/module/checkmoduledependencies',
+            data : {
+                id : moduleId
+            }
+        }).then(function (res) {
+            var confirmed = true;
+            if (res.dependencies.length > 1) {
+                confirmed = confirm("The module you try to uninstall has the followind dependencies : "
+                    + res.dependencies.join(',') + '. Are you sure you want to uninstall?'
+                );
+            }
+
+            if (res.dependencies.length < 1 || confirmed) {
+                $.ajax({
+                    url : $(ev.target).attr('href')
+                }).then(function () {
+                    window.reload();
+                }).catch(function (err) {
+                    console.log(err);
+                });
+            }
+
+        }).catch(function (err) {
+            console.log(err);
+        });
+    })
 
 });
