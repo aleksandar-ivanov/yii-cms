@@ -43,13 +43,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aleksandar-ivanov/yii-reports.git",
-                "reference": "6056a52289eafc2192d27f790066233e60c80cec"
+                "reference": "add9589f7875cc60d8f2a7f4891b062f973eb29c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-reports/zipball/6056a52289eafc2192d27f790066233e60c80cec",
-                "reference": "6056a52289eafc2192d27f790066233e60c80cec",
+                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-reports/zipball/add9589f7875cc60d8f2a7f4891b062f973eb29c",
+                "reference": "add9589f7875cc60d8f2a7f4891b062f973eb29c",
                 "shasum": ""
+            },
+            "require": {
+                "aleksandar-ivanov/aivanov-module-users": "dev-master"
             },
             "type": "aivanov-module",
             "license": [
@@ -66,7 +69,7 @@
                 "source": "https://github.com/aleksandar-ivanov/yii-reports/tree/master",
                 "issues": "https://github.com/aleksandar-ivanov/yii-reports/issues"
             },
-            "time": "2018-04-11T16:11:40+00:00"
+            "time": "2018-04-25T12:32:12+00:00"
         },
         {
             "name": "aleksandar-ivanov/aivanov-module-users",
@@ -168,7 +171,7 @@
             "version": "1.4.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:puikinsh/gentelella.git",
+                "url": "https://github.com/puikinsh/gentelella.git",
                 "reference": "3448fdfdf16a41707d6e2a8154d592a88d85c41c"
             },
             "dist": {
