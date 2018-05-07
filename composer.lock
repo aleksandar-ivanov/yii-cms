@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "469c597830ead05fefecdae13464e7e7",
+    "content-hash": "ceb0a2b7ffec43f5a5123b9d0c7af044",
     "packages": [
         {
             "name": "aleksandar-ivanov/aivanov-module-posts",
@@ -77,12 +77,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aleksandar-ivanov/yii-users.git",
-                "reference": "425186f3ba70223c1b2ed6de32d500780142a37c"
+                "reference": "2901de86b088e4bde66875fbd0d897da3fda5fd4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-users/zipball/425186f3ba70223c1b2ed6de32d500780142a37c",
-                "reference": "425186f3ba70223c1b2ed6de32d500780142a37c",
+                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-users/zipball/2901de86b088e4bde66875fbd0d897da3fda5fd4",
+                "reference": "2901de86b088e4bde66875fbd0d897da3fda5fd4",
                 "shasum": ""
             },
             "require": {
@@ -100,7 +100,7 @@
                 "source": "https://github.com/aleksandar-ivanov/yii-users/tree/master",
                 "issues": "https://github.com/aleksandar-ivanov/yii-users/issues"
             },
-            "time": "2018-04-20T16:06:26+00:00"
+            "time": "2018-05-07T11:08:13+00:00"
         },
         {
             "name": "aleksandar-ivanov/yii-module-installer",
@@ -3725,8 +3725,6 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {
-        "php": ">=5.4.0"
-    },
+    "platform": [],
     "platform-dev": []
 }
