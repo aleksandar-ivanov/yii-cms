@@ -40,7 +40,7 @@ class LoginController extends Controller
 
         Yii::$app->user->login($user);
 
-        return $this->redirect('/users');
+        return $this->redirect('/users/profile');
     }
 
     protected function loginError()

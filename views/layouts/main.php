@@ -65,6 +65,10 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
                         $items = [];
 
                         foreach (Yii::$container->get('modulesManager')->getEnabledModules() as $mod) {
+                            if (!$mod->canBeManaged()) {
+                                continue;
+                            }
+
                             $items[] = [
                                 'label' => ucfirst($mod->getUniqueId()),
                                 'url' => "/{$mod->getUniqueId()}",
@@ -118,7 +122,7 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;">  Profile</a>
+                                <li><a href="/users/profile">Profile</a>
                                 </li>
                                 <li>
                                     <a href="javascript:;">
