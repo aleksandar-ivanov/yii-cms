@@ -23,8 +23,9 @@
         "aleksandar-ivanov/aivanov-module-posts": "dev-master",
         "aleksandar-ivanov/aivanov-module-users": "dev-master",
         "aleksandar-ivanov/aivanov-module-reports": "dev-master",
-        "2amigos/yii2-ckeditor-widget": "^2.1",
-        "ezyang/htmlpurifier": "~4.6"
+        "ezyang/htmlpurifier": "~4.6",
+        "2amigos/yii2-chartjs-widget": "~2.0",
+        "2amigos/yii2-ckeditor-widget": "^2.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
