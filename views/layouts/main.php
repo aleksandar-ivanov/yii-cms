@@ -29,7 +29,7 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
 </head>
 <body class="nav-<?= !empty($_COOKIE['menuIsCollapsed']) && $_COOKIE['menuIsCollapsed'] == 'true' ? 'sm' : 'md' ?>" >
 <?php $this->beginBody(); ?>
-<div class="container body">
+<div id="main" class="container body">
 
     <div class="main_container">
 
@@ -37,7 +37,9 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
             <div class="left_col scroll-view">
 
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="/" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Alela!</span></a>
+                    <a href="/" class="site_title">
+                        <img src="/cms-icon.png" alt="..." class="img-circle logo"></i>
+                        <span>Alex CMS!</span></a>
                 </div>
                 <div class="clearfix"></div>
 
@@ -48,7 +50,7 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
-                        <h2>John Doe</h2>
+                        <h2><?= Yii::$app->user->identity->getFullname(); ?></h2>
                     </div>
                 </div>
                 <!-- /menu prile quick info -->
@@ -92,13 +94,13 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
                     <a data-toggle="tooltip" data-placement="top" title="Settings" href="/settings">
                         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                    <a data-toggle="tooltip" data-placement="top" title="FullScreen" class="full-screen">
                         <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Lock">
-                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                    <a data-toggle="tooltip" data-placement="top" title="Test">
+                        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout">
+                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="/site/logout">
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -118,7 +120,7 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="http://placehold.it/128x128" alt="">John Doe
+                                <img src="http://placehold.it/128x128" alt=""> <?= Yii::$app->user->identity->getFullname(); ?>
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -134,13 +136,7 @@ $bundle = \app\extentions\components\AssetBundler::register($this);
                                     <a href="javascript:;">Help</a>
                                 </li>
                                 <li>
-                                    <form action="/site/logout" method="POST">
-                                        <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
-                                        <button>
-                                            <i class="fa fa-sign-out pull-right"></i> Log Out
-                                        </button>
-                                    </form>
-
+                                    <a href="/site/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </li>
                             </ul>
                         </li>

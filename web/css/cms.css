@@ -12,3 +12,17 @@ th.action-column, td.action-column, th.check-column, td.check-column {
     margin-left: 50%;
 }
 
+.logo {
+    width: 60px;
+    height: 48px;
+    background: #fff;
+    z-index: 1000;
+    position: inherit;
+    border: 1px solid rgba(52, 73, 94, 0.44);
+    padding: 4px;
+}
+
+.nav_title, .left_col, .sidebar-footer {
+    background: #39598c;
+}
+

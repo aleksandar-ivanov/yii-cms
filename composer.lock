@@ -127,18 +127,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aleksandar-ivanov/yii-posts.git",
-                "reference": "67f0f84930a58de15c2422f3f41274601476baca"
+                "reference": "ed824f49eae9a279117dc7d4d80f0b89d7270d1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-posts/zipball/67f0f84930a58de15c2422f3f41274601476baca",
-                "reference": "67f0f84930a58de15c2422f3f41274601476baca",
+                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-posts/zipball/ed824f49eae9a279117dc7d4d80f0b89d7270d1d",
+                "reference": "ed824f49eae9a279117dc7d4d80f0b89d7270d1d",
                 "shasum": ""
             },
             "require": {
                 "composer/installers": "~1.0"
             },
             "type": "aivanov-module",
+            "extra": {
+                "entry": "app\\modules\\posts\\PostsManagement"
+            },
             "authors": [
                 {
                     "name": "Aleksandar Ivanov",
@@ -150,7 +153,7 @@
                 "source": "https://github.com/aleksandar-ivanov/yii-posts/tree/master",
                 "issues": "https://github.com/aleksandar-ivanov/yii-posts/issues"
             },
-            "time": "2018-04-10T17:04:12+00:00"
+            "time": "2018-05-11T15:41:51+00:00"
         },
         {
             "name": "aleksandar-ivanov/aivanov-module-reports",
@@ -158,18 +161,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aleksandar-ivanov/yii-reports.git",
-                "reference": "add9589f7875cc60d8f2a7f4891b062f973eb29c"
+                "reference": "d0010ca1b62e824b8f50a6e51126c4e2c6c451a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-reports/zipball/add9589f7875cc60d8f2a7f4891b062f973eb29c",
-                "reference": "add9589f7875cc60d8f2a7f4891b062f973eb29c",
+                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-reports/zipball/d0010ca1b62e824b8f50a6e51126c4e2c6c451a0",
+                "reference": "d0010ca1b62e824b8f50a6e51126c4e2c6c451a0",
                 "shasum": ""
             },
             "require": {
                 "aleksandar-ivanov/aivanov-module-users": "dev-master"
             },
             "type": "aivanov-module",
+            "extra": {
+                "entry": "app\\modules\\reports\\ReportsManagement"
+            },
             "license": [
                 "MIT"
             ],
@@ -184,7 +190,7 @@
                 "source": "https://github.com/aleksandar-ivanov/yii-reports/tree/master",
                 "issues": "https://github.com/aleksandar-ivanov/yii-reports/issues"
             },
-            "time": "2018-04-25T12:32:12+00:00"
+            "time": "2018-05-16T19:15:58+00:00"
         },
         {
             "name": "aleksandar-ivanov/aivanov-module-users",
@@ -192,18 +198,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aleksandar-ivanov/yii-users.git",
-                "reference": "2901de86b088e4bde66875fbd0d897da3fda5fd4"
+                "reference": "7c1c4f24114c792c671e147da5e936b6ffe405f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-users/zipball/2901de86b088e4bde66875fbd0d897da3fda5fd4",
-                "reference": "2901de86b088e4bde66875fbd0d897da3fda5fd4",
+                "url": "https://api.github.com/repos/aleksandar-ivanov/yii-users/zipball/7c1c4f24114c792c671e147da5e936b6ffe405f5",
+                "reference": "7c1c4f24114c792c671e147da5e936b6ffe405f5",
                 "shasum": ""
             },
             "require": {
                 "aleksandar-ivanov/yii-module-installer": "dev-master"
             },
             "type": "aivanov-module",
+            "extra": {
+                "entry": "app\\modules\\users\\UsersManagement"
+            },
             "authors": [
                 {
                     "name": "Aleksandar Ivanov",
@@ -215,7 +224,7 @@
                 "source": "https://github.com/aleksandar-ivanov/yii-users/tree/master",
                 "issues": "https://github.com/aleksandar-ivanov/yii-users/issues"
             },
-            "time": "2018-05-07T11:08:13+00:00"
+            "time": "2018-05-11T15:41:32+00:00"
         },
         {
             "name": "aleksandar-ivanov/yii-module-installer",
